@@ -2,10 +2,16 @@
 # Import libraries
 from tkinter import *
 
+
+# Parameters
+DEFAULT_EMAIL = "thiago.strava.correa@gmail.com"
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -35,6 +41,7 @@ label_02.grid(column=0, row=2)
 
 #Input user
 input_user = Entry(width=52)
+input_user.insert(0, DEFAULT_EMAIL)
 input_user.grid(column=1, row=2, columnspan=2)
 
 # Label: "Password:"
