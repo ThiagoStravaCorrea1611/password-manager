@@ -5,13 +5,21 @@ from tkinter import *
 
 # Parameters
 DEFAULT_EMAIL = "thiago.strava.correa@gmail.com"
+PASSWORD_FILE = "password_file.txt"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-
-
+def save_password():
+    new_line = " | ".join([input_website.get(),
+                    input_user.get(),
+                    input_password.get()]) + "\n"
+    with open(PASSWORD_FILE, "a") as file:
+        file.write(new_line)
+    
+    input_website.delete(0, "end")
+    input_password.delete(0, "end")
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -57,7 +65,7 @@ button_gen = Button(text = "Generate Password", width = 15, pady=2)
 button_gen.grid(column=2, row=3)
 
 # Button: "Add"
-button_add = Button(text = "Add", width = 45, pady=2)
+button_add = Button(text = "Add", width = 45, pady=2, command = save_password)
 button_add.grid(column=1, row=4, columnspan=2)
 
 # Main loop
