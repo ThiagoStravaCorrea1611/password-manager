@@ -3,9 +3,10 @@
 from tkinter import *
 from tkinter import messagebox
 from password_gen import password_gen
+import pyperclip
 
 # Parameters
-DEFAULT_EMAIL = "thiago.strava.correa@gmail.com"
+DEFAULT_EMAIL = "#########@gmail.com"
 PASSWORD_FILE = "password_file.txt"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -14,6 +15,7 @@ def gen_password_button():
     suggested_password = password_gen()
     input_password.delete(0, "end")
     input_password.insert(0, suggested_password)
+    pyperclip.copy(suggested_password)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
