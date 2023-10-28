@@ -4,7 +4,6 @@ from tkinter import *
 from tkinter import messagebox
 from password_gen import password_gen
 
-
 # Parameters
 DEFAULT_EMAIL = "thiago.strava.correa@gmail.com"
 PASSWORD_FILE = "password_file.txt"
