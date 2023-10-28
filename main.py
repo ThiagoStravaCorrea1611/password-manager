@@ -1,6 +1,7 @@
 
 # Import libraries
 from tkinter import *
+from tkinter import messagebox
 
 
 # Parameters
@@ -12,14 +13,28 @@ PASSWORD_FILE = "password_file.txt"
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
-    new_line = " | ".join([input_website.get(),
-                    input_user.get(),
-                    input_password.get()]) + "\n"
-    with open(PASSWORD_FILE, "a") as file:
-        file.write(new_line)
+    website = input_website.get()
+    user = input_user.get()
+    password = input_password.get()
     
-    input_website.delete(0, "end")
-    input_password.delete(0, "end")
+    new_line = " | ".join([website,
+                    user,
+                    password]) + "\n"
+    
+    if (len(website) == 0) or (len(user) == 0) or (len(password) == 0):
+        messagebox.showwarning(title="Empty field", message="Please fill out all fields!")
+    else:
+        is_ok = messagebox.askokcancel(
+            title = input_website.get(),
+            message = f"These are the details entered:\nE-mail: {user}\nPassword: {password}\n Is it ok to save?")
+        
+        if is_ok:
+            with open(PASSWORD_FILE, "a") as file:
+                file.write(new_line)
+        
+            input_website.delete(0, "end")
+            input_password.delete(0, "end")
+    
 
 # ---------------------------- UI SETUP ------------------------------- #
 
