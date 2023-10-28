@@ -2,6 +2,7 @@
 # Import libraries
 from tkinter import *
 from tkinter import messagebox
+from password_gen import password_gen
 
 
 # Parameters
@@ -9,7 +10,10 @@ DEFAULT_EMAIL = "thiago.strava.correa@gmail.com"
 PASSWORD_FILE = "password_file.txt"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
-
+def gen_password_button():
+    suggested_password = password_gen()
+    input_password.delete(0, "end")
+    input_password.insert(0, suggested_password)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
@@ -27,14 +31,13 @@ def save_password():
         is_ok = messagebox.askokcancel(
             title = input_website.get(),
             message = f"These are the details entered:\nE-mail: {user}\nPassword: {password}\n Is it ok to save?")
-        
+
         if is_ok:
             with open(PASSWORD_FILE, "a") as file:
                 file.write(new_line)
-        
+
             input_website.delete(0, "end")
             input_password.delete(0, "end")
-    
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -76,7 +79,7 @@ input_password = Entry(width=32)
 input_password.grid(column=1, row=3)
 
 # Button: "Generate Password"
-button_gen = Button(text = "Generate Password", width = 15, pady=2)
+button_gen = Button(text = "Generate Password", width = 15, pady=2, command=gen_password_button)
 button_gen.grid(column=2, row=3)
 
 # Button: "Add"
