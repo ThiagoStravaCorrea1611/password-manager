@@ -9,12 +9,14 @@ DEFAULT_EMAIL = "thiago.strava.correa@gmail.com"
 PASSWORD_FILE = "password_file.txt"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
 def gen_password_button():
     suggested_password = password_gen()
     input_password.delete(0, "end")
     input_password.insert(0, suggested_password)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+
 def save_password():
     website = input_website.get()
     user = input_user.get()
