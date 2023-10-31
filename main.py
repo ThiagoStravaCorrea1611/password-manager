@@ -54,6 +54,34 @@ def save_password():
             input_website.delete(0, "end")
             input_password.delete(0, "end")
 
+# ---------------------------- SAVE PASSWORD ------------------------------- #
+
+def search_website():
+    # Website to search in the password file
+    website = input_website.get()
+    
+    try:
+        with open(PASSWORD_FILE, "r") as file:
+            # Open password file
+            file_data = json.load(file)
+            # Retrieve data of searched website
+            website_data = file_data[website]
+    except FileNotFoundError:
+        # Nothing happens in case there is no file yet
+        pass
+    except KeyError:
+        # Reset fields to default values in case there is no info for website
+        input_user.delete(0, "end")
+        input_password.delete(0, "end")
+        input_user.insert(0, DEFAULT_EMAIL)
+    else:
+        # Populate the input fields with the stored data in the file
+        input_user.delete(0, "end")
+        input_password.delete(0, "end")
+        input_user.insert(0, website_data['user'])
+        input_password.insert(0, website_data['password'])
+        
+        
 # ---------------------------- UI SETUP ------------------------------- #
 
 # Window
@@ -72,9 +100,13 @@ label_01 = Label(text="Website:", pady=2)
 label_01.grid(column=0, row=1)
 
 #Input website
-input_website = Entry(width=52)
+input_website = Entry(width=32)
 input_website.focus()
-input_website.grid(column=1, row=1, columnspan=2)
+input_website.grid(column=1, row=1)
+
+# Button: "Search"
+button_search = Button(text = "Search", width = 15, pady=2, command=search_website)
+button_search.grid(column=2, row=1)
 
 # Label: "Email/Username:"
 label_02 = Label(text="Email/Username:", pady=2)
