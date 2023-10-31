@@ -4,10 +4,11 @@ from tkinter import *
 from tkinter import messagebox
 from password_gen import password_gen
 import pyperclip
+import json
 
 # Parameters
 DEFAULT_EMAIL = "#########@gmail.com"
-PASSWORD_FILE = "password_file.txt"
+PASSWORD_FILE = "passwords_file.json"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -24,9 +25,12 @@ def save_password():
     user = input_user.get()
     password = input_password.get()
     
-    new_line = " | ".join([website,
-                    user,
-                    password]) + "\n"
+    new_data = {
+        website: {
+            "user": user,
+            "password": password
+        }
+    }
     
     if (len(website) == 0) or (len(user) == 0) or (len(password) == 0):
         messagebox.showwarning(title="Empty field", message="Please fill out all fields!")
@@ -36,8 +40,16 @@ def save_password():
             message = f"These are the details entered:\nE-mail: {user}\nPassword: {password}\n Is it ok to save?")
 
         if is_ok:
-            with open(PASSWORD_FILE, "a") as file:
-                file.write(new_line)
+            try:
+                with open(PASSWORD_FILE, "r") as file:
+                    file_data = json.load(file)
+            except FileNotFoundError:
+                with open(PASSWORD_FILE, "w") as file:
+                    json.dump(new_data, file, indent = 4)
+            else:
+                file_data.update(new_data)
+                with open(PASSWORD_FILE, "w") as file:
+                    json.dump(file_data, file, indent = 4)
 
             input_website.delete(0, "end")
             input_password.delete(0, "end")
